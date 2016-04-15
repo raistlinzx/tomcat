@@ -14,7 +14,6 @@
     <Connector executor="tomcatThreadPool"
                port="8080" protocol="HTTP/1.1"
                connectionTimeout="20000"
-               redirectPort="8443"
                URIEncoding="utf-8" />
 
     <Engine name="Catalina" defaultHost="localhost">
