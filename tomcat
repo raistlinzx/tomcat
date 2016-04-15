@@ -26,20 +26,36 @@ case "$1"  in
             echo "Path: $APP_HOME"
             RETVAL=1
         else
+            echo "Preparing Directory & Files..."
             mkdir $APP_HOME
-            cp -rf
+            mkdir $APP_HOME/logs
+            mkdir $APP_HOME/conf
+            mkdir $APP_HOME/temp
+            mkdir $APP_HOME/work
+            mkdir $APP_HOME/webapps
+            mkdir $APP_HOME/lib
+            mkdir $APP_HOME/bin
+
+            cp -rf $CATALINA_HOME/custom/bin/* $APP_HOME/bin
+            cp -rf $CATALINA_HOME/custom/conf/* $APP_HOME/conf
+            echo "Instance '$2' is created."
             RETVAL=0
         fi
     fi
     ;;
 'start')
-    RETVAL=1
+    export CATALINA_BASE=$CATALINA_INSTANCE_HOME/$2
+    $CATALINA_HOME/bin/startup.sh
+    RETVAL=0
     ;;
 'stop')
-    RETVAL=1
+    export CATALINA_BASE=$CATALINA_INSTANCE_HOME/$2
+    $CATALINA_HOME/bin/shutdown.sh
+    RETVAL=0
     ;;
 'logs')
-    RETVAL=1
+    tail -f $CATALINA_INSTANCE_HOME/$2/logs/catalina.out
+    RETVAL=0
     ;;
 'config')
     echo "CATALINA_HOME=$CATALINA_HOME"
