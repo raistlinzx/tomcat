@@ -1,0 +1,57 @@
+#!/bin/sh
+# This script is useful in tomcat operations
+# create
+
+if [[ -z "$CATALINA_HOME" || -z "$CATALINA_INSTANCE_HOME" ]]; then
+    echo "CATALINA_HOME && CATALINA_INSTANCE_HOME need to be configured."
+    exit 1
+fi
+
+
+showhelp () {
+    echo "Usage: { start | stop | logs } $1"
+    echo "    \$1 - Instance's Name"
+}
+
+
+case "$1"  in
+'create')
+    if [ -z "$2" ]; then
+        showhelp
+        RETVAL=1
+    else
+        APP_HOME=$CATALINA_INSTANCE_HOME/$2
+        if [ -e $APP_HOME ]; then
+            echo "The instance '$2' is exists."
+            echo "Path: $APP_HOME"
+            RETVAL=1
+        else
+            mkdir $APP_HOME
+            cp -rf
+            RETVAL=0
+        fi
+    fi
+    ;;
+'start')
+    RETVAL=1
+    ;;
+'stop')
+    RETVAL=1
+    ;;
+'logs')
+    RETVAL=1
+    ;;
+'config')
+    echo "CATALINA_HOME=$CATALINA_HOME"
+    echo "CATALINA_INSTANCE_HOME=$CATALINA_INSTANCE_HOME"
+    ;;
+*)
+    showhelp
+    RETVAL=1
+    ;;
+esac
+
+
+
+unset showhelp
+exit $RETVAL
