@@ -38,6 +38,14 @@ case "$1"  in
 
             cp -rf $CATALINA_HOME/custom/bin/* $APP_HOME/bin
             cp -rf $CATALINA_HOME/custom/conf/* $APP_HOME/conf
+
+            read -p "Change the Connector port? [8080]: " port
+            if [ -n "$port" ]; then
+                echo "Port is $port"
+                mv $APP_HOME/conf/server.xml $APP_HOME/conf/server.xml.old
+                sed "s/8080/$port/" $APP_HOME/conf/server.xml.old > $APP_HOME/conf/server.xml
+                rm -f $APP_HOME/conf/server.xml.old
+            fi
             echo "Instance '$2' is created."
             RETVAL=0
         fi
