@@ -46,6 +46,23 @@ case "$1"  in
                 sed "s/8080/$port/" $APP_HOME/conf/server.xml.old > $APP_HOME/conf/server.xml
                 rm -f $APP_HOME/conf/server.xml.old
             fi
+
+            read -p "Change the JMX port? [6969]: " jmxport
+            if [ -n "$jmxport" ]; then
+                echo "JMX Port is $jmxport"
+                mv $APP_HOME/bin/setenv.sh $APP_HOME/bin/setenv.sh.old
+                sed "s/6969/$jmxport/g" $APP_HOME/bin/setenv.sh.old > $APP_HOME/bin/setenv.sh
+                rm -f $APP_HOME/bin/setenv.sh.old
+            fi
+
+            read -p "Change the JMX Remote Host? [127.0.0.1]: " jmxhost
+            if [ -n "$jmxhost" ]; then
+                echo "JMX Host is $jmxhost"
+                mv $APP_HOME/bin/setenv.sh $APP_HOME/bin/setenv.sh.old
+                sed "s/127.0.0.1/$jmxhost/" $APP_HOME/bin/setenv.sh.old > $APP_HOME/bin/setenv.sh
+                rm -f $APP_HOME/bin/setenv.sh.old
+            fi
+
             echo "Instance '$2' is created."
             RETVAL=0
         fi
