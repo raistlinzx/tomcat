@@ -63,6 +63,18 @@ case "$1"  in
                 rm -f $APP_HOME/bin/setenv.sh.old
             fi
 
+            read -p "Do you need ROOT context? [N]: " needroot
+            if [ -n "$needroot" ]; then
+                echo "Add Context ROOT"
+                cp -rf $CATALINA_HOME/webapps/ROOT $APP_HOME/webapps/
+            fi
+
+            read -p "Do you need MANAGER context? [N]: " needmanager
+            if [ -n "$needmanager" ]; then
+                echo "Add Context MANAGER"
+                cp -rf $CATALINA_HOME/webapps/manager $APP_HOME/webapps/
+            fi
+
             echo "Instance '$2' is created."
             RETVAL=0
         fi
